@@ -1,0 +1,6 @@
+package br.com.fiap.sereno.model;
+
+public enum EnumCategoria {
+	PARQUE, BIBLIOTECA, MUSEU, CENTRO_CULTURAL, SHOPPING, RESTAURANTE, CAFE,
+	TRANSPORTE, SAUDE, SERVICO_PUBLICO, EDUCACAO, OUTRO
+}

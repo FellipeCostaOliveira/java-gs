@@ -1,0 +1,100 @@
+### Requisições de teste (IntelliJ HTTP Client / VS Code REST Client)
+@base = http://localhost:8080
+
+### 1) Login como CIDADÃO
+# @name loginCidadao
+POST {{base}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "cidadao@sereno.app", "senha": "Sereno@123" }
+
+### 2) Login como GESTOR
+# @name loginGestor
+POST {{base}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "gestor@sereno.app", "senha": "Sereno@123" }
+
+### 3) Cadastro (sempre cria CIDADAO)
+POST {{base}}/api/auth/register
+Content-Type: application/json
+
+{ "nome": "Maria Silva", "email": "maria@email.com", "senha": "Senha123" }
+
+### 4) Meu perfil
+GET {{base}}/api/usuarios/me
+Authorization: Bearer {{loginCidadao.response.body.token}}
+
+### 5) Listar locais (paginado + filtros)
+GET {{base}}/api/locais?page=0&size=10&sort=nome&indiceMinimo=5
+Authorization: Bearer {{loginCidadao.response.body.token}}
+
+### 6) Criar local (GESTOR) -> 201
+POST {{base}}/api/locais
+Authorization: Bearer {{loginGestor.response.body.token}}
+Content-Type: application/json
+
+{
+  "nome": "Museu da Língua Portuguesa",
+  "descricao": "Museu interativo na Estação da Luz.",
+  "categoria": "MUSEU",
+  "endereco": "Praça da Luz, s/n - Luz, São Paulo - SP",
+  "latitude": -23.534700,
+  "longitude": -46.633800,
+  "recursosAcessibilidade": "Elevadores; audiodescrição"
+}
+
+### 7) Criar local como CIDADÃO -> 403 (papel)
+POST {{base}}/api/locais
+Authorization: Bearer {{loginCidadao.response.body.token}}
+Content-Type: application/json
+
+{ "nome": "X", "categoria": "OUTRO", "endereco": "Rua X", "latitude": 0, "longitude": 0 }
+
+### 8) Validação -> 400 com campos[]
+POST {{base}}/api/locais
+Authorization: Bearer {{loginGestor.response.body.token}}
+Content-Type: application/json
+
+{ "nome": "", "latitude": 200 }
+
+### 9) Avaliar local (CIDADAO) -> publica AvaliacaoAlteradaEvent na fila sereno.avaliacoes
+# @name novaAvaliacao
+POST {{base}}/api/avaliacoes
+Authorization: Bearer {{loginCidadao.response.body.token}}
+Content-Type: application/json
+
+{
+  "localId": 3,
+  "nivelRuido": 2,
+  "nivelIluminacao": 2,
+  "nivelLotacao": 1,
+  "periodoVisita": "MANHA",
+  "comentario": "Jardins bem tranquilos pela manhã."
+}
+
+### 10) Ver o indice_calma recalculado pelo consumidor
+GET {{base}}/api/locais/3
+Authorization: Bearer {{loginCidadao.response.body.token}}
+
+### 11) Editar a própria avaliação
+PUT {{base}}/api/avaliacoes/{{novaAvaliacao.response.body.id}}
+Authorization: Bearer {{loginCidadao.response.body.token}}
+Content-Type: application/json
+
+{ "nivelRuido": 3, "nivelIluminacao": 2, "nivelLotacao": 3, "periodoVisita": "TARDE", "comentario": "À tarde fica mais movimentado." }
+
+### 12) Avaliações de um local (paginado)
+GET {{base}}/api/avaliacoes?localId=2&page=0&size=5
+Authorization: Bearer {{loginCidadao.response.body.token}}
+
+### 13) Insight com IA (Spring AI)
+GET {{base}}/api/locais/2/insight
+Authorization: Bearer {{loginCidadao.response.body.token}}
+
+### 14) Sem token -> 401 padronizado
+GET {{base}}/api/locais
+
+### 15) Remover avaliação (dono ou GESTOR) -> 204
+DELETE {{base}}/api/avaliacoes/{{novaAvaliacao.response.body.id}}
+Authorization: Bearer {{loginCidadao.response.body.token}}
