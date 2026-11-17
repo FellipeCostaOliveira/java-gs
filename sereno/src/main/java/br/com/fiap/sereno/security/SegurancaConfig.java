@@ -45,7 +45,7 @@ public class SegurancaConfig {
 						.requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
 						.requestMatchers(ROTAS_PUBLICAS).permitAll()
 
-						.requestMatchers(HttpMethod.POST, "/api/locais").hasRole(GESTOR)
+						.requestMatchers(HttpMethod.POST, "/api/locais").hasAnyRole(CIDADAO, GESTOR)
 						.requestMatchers(HttpMethod.PUT, "/api/locais/*").hasRole(GESTOR)
 						.requestMatchers(HttpMethod.DELETE, "/api/locais/*").hasRole(GESTOR)
 

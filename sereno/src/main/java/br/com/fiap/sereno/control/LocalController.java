@@ -38,7 +38,7 @@ import jakarta.validation.constraints.DecimalMin;
 
 @RestController
 @RequestMapping("/api/locais")
-@Tag(name = "Locais", description = "Mapa sensorial: leitura para todos, CRUD para GESTOR, insight com IA")
+@Tag(name = "Locais", description = "Mapa sensorial: cadastro por CIDADAO e GESTOR, edição e exclusão só GESTOR, insight com IA")
 public class LocalController {
 
 	private final LocalService localService;
@@ -68,8 +68,8 @@ public class LocalController {
 	}
 
 	@PostMapping
-	@PreAuthorize("hasRole('GESTOR')")
-	@Operation(summary = "Cadastra um local (GESTOR)")
+	@PreAuthorize("hasAnyRole('CIDADAO','GESTOR')")
+	@Operation(summary = "Cadastra um local (CIDADAO ou GESTOR)")
 	public ResponseEntity<LocalResponse> criar(@RequestBody @Valid LocalRequest req,
 			@Parameter(hidden = true) @AuthenticationPrincipal Jwt jwt) {
 		LocalResponse criado = localService.criar(req, UsuarioAutenticado.de(jwt).id());

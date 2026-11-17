@@ -175,14 +175,38 @@ class SerenoApiIntegracaoTest {
 
 	@Test
 	@Order(10)
-	@DisplayName("03 - Cidadão não cadastra local: 403")
-	void cidadaoNaoCriaLocal() throws Exception {
-		mvc.perform(post("/api/locais").header(HttpHeaders.AUTHORIZATION, cidadao())
+	@DisplayName("03 - Cidadão não edita local: 403")
+	void cidadaoNaoEditaLocal() throws Exception {
+		mvc.perform(put("/api/locais/1").header(HttpHeaders.AUTHORIZATION, cidadao())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("""
 						{"nome": "Teste", "categoria": "OUTRO", "endereco": "Rua X", "latitude": 0, "longitude": 0}
 						"""))
 				.andExpect(status().isForbidden());
+	}
+
+	@Test
+	@Order(10)
+	@DisplayName("03 - Cidadão não exclui local: 403")
+	void cidadaoNaoExcluiLocal() throws Exception {
+		mvc.perform(delete("/api/locais/1").header(HttpHeaders.AUTHORIZATION, cidadao()))
+				.andExpect(status().isForbidden());
+	}
+
+	@Test
+	@Order(13)
+	@DisplayName("01/03 - Cidadão cadastra local: 201")
+	void cidadaoCriaLocal() throws Exception {
+		mvc.perform(post("/api/locais").header(HttpHeaders.AUTHORIZATION, cidadao())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("""
+						{"nome": "Restaurante Silencioso", "categoria": "RESTAURANTE",
+						 "endereco": "Rua Augusta, 1000 - Consolação, São Paulo - SP",
+						 "latitude": -23.5560, "longitude": -46.6620}
+						"""))
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.id").value(notNullValue()))
+				.andExpect(jsonPath("$.classificacaoCalma").value("SEM_DADOS"));
 	}
 
 	@Test
