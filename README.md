@@ -2,7 +2,7 @@
 
 **Sereno** é um app de acessibilidade urbana: um **mapa sensorial** em que cidadãos avaliam lugares da cidade quanto a **ruído, iluminação e lotação**. Com essas avaliações a API calcula o **índice de calma (0 a 10)** de cada local e usa **IA generativa** para orientar pessoas com sensibilidade sensorial (autistas, pessoas com TDAH, enxaqueca, ansiedade, idosos, famílias com crianças pequenas) sobre **quando e como** visitar cada lugar com mais conforto.
 
-Esta é a API backend (Java 21 + Spring Boot 3), a mesma consumida pelo app Mobile.
+Esta é a API backend (Java 21 + Spring Boot ), a mesma consumida pelo app Mobile.
 
 ## Links da entrega
 | Item | Link |
