@@ -8,7 +8,7 @@ Esta é a API backend (Java 21 + Spring Boot 3), a mesma consumida pelo app Mobi
 | Item | Link |
 |---|---|
 | Repositório | https://github.com/FellipeCostaOliveira/java-gs |
-| API no ar (Render) | https://COLE-AQUI-O-LINK-DO-RENDER.onrender.com |
+| API no ar (Render) | https://sereno-api-ayhx.onrender.com |
 | Swagger UI | https://COLE-AQUI-O-LINK-DO-RENDER.onrender.com/swagger-ui.html |
 | Vídeo pitch (até 5 min) | COLE AQUI O LINK DO YOUTUBE OU DRIVE |
 
