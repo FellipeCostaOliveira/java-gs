@@ -9,8 +9,8 @@ Esta é a API backend (Java 21 + Spring Boot 3), a mesma consumida pelo app Mobi
 |---|---|
 | Repositório | https://github.com/FellipeCostaOliveira/java-gs |
 | API no ar (Render) | https://sereno-api-ayhx.onrender.com |
-| Swagger UI | https://COLE-AQUI-O-LINK-DO-RENDER.onrender.com/swagger-ui.html |
-| Vídeo pitch (até 5 min) | COLE AQUI O LINK DO YOUTUBE OU DRIVE |
+| Swagger UI | https://sereno-api-ayhx.onrender.com/swagger-ui.html |
+| Vídeo pitch  | https://youtu.be/d1GEXt4JAF0 |
 
 > No plano grátis do Render a API "dorme" após 15 min sem uso: a primeira chamada pode levar até 1 minuto.
 
@@ -291,4 +291,4 @@ export async function login(email: string, senha: string) {
 Usamos IA de duas formas neste projeto:
 
 1. **Como funcionalidade da API:** o endpoint `GET /api/locais/{id}/insight` usa Spring AI com o modelo `gpt-4o-mini` da OpenAI para gerar o insight sensorial de cada local (requisito 04).
-2. **Como ferramenta de apoio ao desenvolvimento:** usamos o assistente Claude (Anthropic) para gerar e revisar partes do código, dos testes automatizados, desta documentação e do roteiro do vídeo pitch. Todo o conteúdo foi revisado, executado e testado pelo grupo, que validou os testes JUnit, o Swagger, a integração com a OpenAI, o RabbitMQ e o deploy no Render. O grupo é responsável pelas decisões e pelo resultado final.
+2. **Como ferramenta de apoio ao desenvolvimento:** usamos o assistente Claude (Anthropic) para gerar e revisar partes do código e dos testes automatizados. Todo o conteúdo foi revisado, executado e testado pelo grupo, que validou os testes JUnit, o Swagger, a integração com a OpenAI, o RabbitMQ e o deploy no Render. O grupo é responsável pelas decisões e pelo resultado final.
